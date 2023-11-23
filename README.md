@@ -24,9 +24,9 @@ To create your own dataset, you must create a file with the following format:
 <Number of items>
 [<Shoe>]*
 ```
-Example datase file:
+Example datase file run on the project directory:
 ```bash
-cat dataset.txt << EOF
+cat > dataset.txt << EOF
 3 
 Satterfield, Goldner and Orn Mike Raffone;113,59;23;52;2484;3,7 
 Thompson, Heller and Will Kent Cook;288,96;24;44;2271;4,5 
