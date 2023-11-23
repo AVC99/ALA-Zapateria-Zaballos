@@ -22,7 +22,7 @@ To run the entire project, you must have Python 3 installed on your computer.
 To create your own dataset, you must create a file with the following format:
 ```bash
 <Number of items>
-<Max weight of the backpack>
+[<Shoe>]*
 ```
 Example datase file:
 ```bash
