@@ -24,14 +24,17 @@ To create your own dataset, you must create a file with the following format:
 <Number of items>
 [<Shoe>]*
 ```
+For databases use names datasetXXS.txt, datasetXS.txt, datasetS.txt, datasetM.txt, datasetL.txt, datasetXXXL.txt
 Example datase file run on the project directory:
 ```bash
-cat > dataset.txt << EOF
-3 
-Satterfield, Goldner and Orn Mike Raffone;113,59;23;52;2484;3,7 
-Thompson, Heller and Will Kent Cook;288,96;24;44;2271;4,5 
-Skiles-Rodriguez Rusty Keyes;188,77;20;38;2213;0,6
-EOF
+cat > datasetXXS.txt << EOF
+6
+Abernathy, Witting and Lebsack Ferry;145,28;24;40;2702;6,7
+Farrell-Powlowski Koch 2;491,62;27;38;2950;9,0
+Abernathy, Torphy and Pfeffer Larson 0;295,11;29;43;3088;0,9
+Farrell-Powlowski Shooe;93,43;16;45;1843;2,4
+Farrell-Powlowski Gottlieb 50;174,89;15;34;3465;9,8
+Farrell-Powlowski Tillman;121,62;17;42;2284;1,0
 ```
 
 
