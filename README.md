@@ -35,6 +35,7 @@ Abernathy, Torphy and Pfeffer Larson 0;295,11;29;43;3088;0,9
 Farrell-Powlowski Shooe;93,43;16;45;1843;2,4
 Farrell-Powlowski Gottlieb 50;174,89;15;34;3465;9,8
 Farrell-Powlowski Tillman;121,62;17;42;2284;1,0
+EOF
 ```
 
 
