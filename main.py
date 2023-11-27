@@ -15,7 +15,7 @@ import os
 
 
 def printResolutionMethodsMenu():
-  while True:
+    while True:
         print()
         print("Please, select an option:")
         print("1. Brute force")
