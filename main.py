@@ -101,4 +101,7 @@ def main():
             IP_start_greedy(shoe_list)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("aborted")
