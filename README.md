@@ -19,6 +19,8 @@ sabateria pugui escollir quin d’ells li fa més el pes
 ## How to run 
 To run the entire project, you must have Python 3 installed on your computer.
 ### Create your dataset
+The datasets are located on /data/datasets/ folder which in this git is empty.
+You can create your own dataset or use the ones we have created for you.
 To create your own dataset, you must create a file with the following format:
 ```bash
 <Number of items>
@@ -27,7 +29,7 @@ To create your own dataset, you must create a file with the following format:
 For databases use names datasetXXS.txt, datasetXS.txt, datasetS.txt, datasetM.txt, datasetL.txt, datasetXXXL.txt
 Example datase file run on the project directory:
 ```bash
-cat > datasetXXS.txt << EOF
+cat > data/datasets/datasetXXS.txt << EOF
 6
 Abernathy, Witting and Lebsack Ferry;145,28;24;40;2702;6,7
 Farrell-Powlowski Koch 2;491,62;27;38;2950;9,0
