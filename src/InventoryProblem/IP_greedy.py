@@ -1,4 +1,4 @@
-from Shoe import *
+from model.Shoe import *
 
 def IP_start_greedy(shoe_list):
   print("THIS IS GREEDY BOII")

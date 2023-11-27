@@ -1,4 +1,4 @@
-from Shoe import *
+from model.Shoe import *
 
 def IP_start_backtracking(shoe_list):
   print("THIS IS BRANCH AND BOUND BOII")

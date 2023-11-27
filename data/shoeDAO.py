@@ -1,4 +1,4 @@
-from Shoe import *
+from model.Shoe import *
 
 def getDatasetName(dataset_option):
   if dataset_option == "1":

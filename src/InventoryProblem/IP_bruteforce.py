@@ -1,4 +1,4 @@
-from Shoe import *
+from model.Shoe import *
 
 def IP_start_bruteforce(shoe_list):
   print("THIS IS BRUTEFORCE BOII")

@@ -1,20 +1,21 @@
-from shoeDAO import getShoes
-from Shoe import *
+from data.shoeDAO import getShoes
+from model.Shoe import *
 
-from InventoryProblem.IP_bruteforce import IP_start_bruteforce
-from InventoryProblem.IP_Backtacking import IP_start_backtracking
-from InventoryProblem.IP_branch_and_bound import IP_start_branch_and_bound
-from InventoryProblem.IP_greedy import IP_start_greedy
+from src.InventoryProblem.IP_bruteforce import IP_start_bruteforce
+from src.InventoryProblem.IP_Backtacking import IP_start_backtracking
+from src.InventoryProblem.IP_branch_and_bound import IP_start_branch_and_bound
+from src.InventoryProblem.IP_greedy import IP_start_greedy
 
-from BoxSendingProblem.BS_bruteforce import BS_start_bruteforce
-from BoxSendingProblem.BS_backtracking import BS_start_backtracking
-from BoxSendingProblem.BS_branch_and_bound import BS_start_branch_and_bound
-from BoxSendingProblem.BS_greedy import BS_start_greedy
+from src.BoxSendingProblem.BS_bruteforce import BS_start_bruteforce
+from src.BoxSendingProblem.BS_backtracking import BS_start_backtracking
+from src.BoxSendingProblem.BS_branch_and_bound import BS_start_branch_and_bound
+from src.BoxSendingProblem.BS_greedy import BS_start_greedy
 
 import os
 
+
 def printResolutionMethodsMenu():
-    while True:
+  while True:
         print()
         print("Please, select an option:")
         print("1. Brute force")
@@ -28,6 +29,7 @@ def printResolutionMethodsMenu():
             return user_input
         else:
             print("Invalid option. Please enter a valid option.")
+
 
 def printProblemsMenu():
     while True:
@@ -43,6 +45,7 @@ def printProblemsMenu():
             return user_input
         else:
             print("Invalid option. Please enter a valid option.")
+
 
 def printDatasetSelectionMenu():
     while True:
@@ -61,6 +64,7 @@ def printDatasetSelectionMenu():
             return user_input
         else:
             print("Invalid option. Please enter a valid option.")
+
 
 def main():
     problem_option = printProblemsMenu()
@@ -83,7 +87,7 @@ def main():
 
     if problem_option == "1":
         if resolution_method == "1":
-           BS_start_bruteforce(shoe_list)
+            BS_start_bruteforce(shoe_list)
         elif resolution_method == "2":
             BS_start_backtracking(shoe_list)
         elif resolution_method == "3":
@@ -99,6 +103,7 @@ def main():
             IP_start_branch_and_bound(shoe_list)
         elif resolution_method == "4":
             IP_start_greedy(shoe_list)
+
 
 if __name__ == "__main__":
     try:
