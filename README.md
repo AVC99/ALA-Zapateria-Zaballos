@@ -16,6 +16,21 @@ Veient la complexitat dels problemes, hem decidit que caldrà aplicar algorismes
 per a solucionar-los. A continuació, els compararem en termes de rendiment per a que  el propietari de la 
 sabateria pugui escollir quin d’ells li fa més el pes
 
+## Reparto de problemas
+### Alex 
+  - [x] P1 Greedy
+  - [x] P1 Backtracking
+  
+### Oscar
+  - [x] P2 Bruteforce
+  - [x] P2 Backtracking
+  - [x] P2 B&B 
+
+### Arnau 
+  - [x] P1 Bruteforce
+  - [x] P1 B&B
+  - [x] P2 Greedy
+
 ## How to run 
 To run the entire project, you must have Python 3 installed on your computer.
 ### Create your dataset
@@ -28,6 +43,7 @@ To create your own dataset, you must create a file with the following format:
 ```
 For databases use names datasetXXS.txt, datasetXS.txt, datasetS.txt, datasetM.txt, datasetL.txt, datasetXXXL.txt
 Example datase file run on the project directory:
+#### For unix systems
 ```bash
 cat > data/datasets/datasetXXS.txt << EOF
 6
@@ -39,7 +55,15 @@ Farrell-Powlowski Gottlieb 50;174,89;15;34;3465;9,8
 Farrell-Powlowski Tillman;121,62;17;42;2284;1,0
 EOF
 ```
-
+#### For windows systems
+```bash echo 6 > data/datasets/datasetXXS.txt
+echo Abernathy, Witting and Lebsack Ferry;145,28;24;40;2702;6,7 >> data/datasets/datasetXXS.txt
+echo Farrell-Powlowski Koch 2;491,62;27;38;2950;9,0 >> data/datasets/datasetXXS.txt
+echo Abernathy, Torphy and Pfeffer Larson 0;295,11;29;43;3088;0,9 >> data/datasets/datasetXXS.txt
+echo Farrell-Powlowski Shooe;93,43;16;45;1843;2,4 >> data/datasets/datasetXXS.txt
+echo Farrell-Powlowski Gottlieb 50;174,89;15;34;3465;9,8 >> data/datasets/datasetXXS.txt
+echo Farrell-Powlowski Tillman;121,62;17;42;2284;1,0 >> data/datasets/datasetXXS.txt
+```
 
 ### Run the project
 Execute the following command in the root directory of the project:
