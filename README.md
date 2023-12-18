@@ -18,8 +18,8 @@ sabateria pugui escollir quin d’ells li fa més el pes
 
 ## Reparto de problemas
 ### Alex 
-  - [x] P1 Greedy
   - [x] P1 Backtracking
+  - [x] P1 Greedy
   
 ### Oscar
   - [x] P2 Bruteforce
