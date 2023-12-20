@@ -1,5 +1,6 @@
 from model.Shoe import *
 
+##JUST TESTING WHERE I PUSH THIS 
 
 def IP_start_greedy(shoe_list):
     print("THIS IS GREEDY BOII")
