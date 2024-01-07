@@ -13,7 +13,7 @@ def IP_start_greedy(shoe_list):
     print("Difference: ", difference)
 
 def solve_greedy(shoe_list):
-    shoe_list.sort(shoe_list, key=lambda x: x.price, reverse=True)
+    shoe_list.sort(key=lambda x: x.price, reverse=True)
 
     shop1 = []
     shop2 = []
