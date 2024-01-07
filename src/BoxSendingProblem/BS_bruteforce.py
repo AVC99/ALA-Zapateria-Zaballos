@@ -1,7 +1,6 @@
 from model.Shoe import *
 from model.Box import *
-from itertools import permutations
-from itertools import product
+from itertools import combinations
 import time
 import math
 
@@ -13,46 +12,37 @@ import math
 def BS_start_bruteforce(shoe_list):
     print("Bruteforce started")
     time_start = time.time()
-
-    # Create all the possible combinations of boxes
-    all_combinations = generate_all_combinations(shoe_list)
-    print_all_combinations(all_combinations)
-
+    # Generate all possible combinations of boxes for each shoe
+    all_combinations = generate_shoe_combinations(shoe_list)
+    # Print all the combinations
+    print_combinations(all_combinations)
     time_end = time.time()
     print("Bruteforce ended")
     print("Time elapsed: " + str(time_end - time_start) + " seconds")
 
 
-def generate_all_combinations(shoe_dataset):
+def generate_shoe_combinations(shoe_list):
     all_combinations = []
-
-    def generate_combinations_recursive(box, shoe_index):
-        if shoe_index == len(shoe_dataset):
-            # Reached the end of the shoe dataset, add the current box
-            all_combinations.append(Box(shoes=box.shoes[:], price=box.price))
-            return
-
-        # Skip the current shoe and move to the next one
-        generate_combinations_recursive(box, shoe_index + 1)
-
-        # Include the current shoe in the box and move to the next shoe
-        box.add_shoe(shoe_dataset[shoe_index])
-        generate_combinations_recursive(box, shoe_index + 1)
-        box.remove_shoe(shoe_dataset[shoe_index])
-
-    generate_combinations_recursive(Box(), 0)
+    for r in range(1, len(shoe_list) + 1):
+        r_combinations = []
+        for comb in combinations(shoe_list, r):
+            box = Box()
+            for shoe in comb:
+                box.add_shoe(shoe)
+            r_combinations.append(box)
+        all_combinations.append(r_combinations)
     return all_combinations
 
+def print_combinations(all_combinations):
+    for i, combinations in enumerate(all_combinations, 1):
+        print(f"sol{i}:")
+        for j, box in enumerate(combinations, 1):
+            print(f"Box {j} contains:")
+            for shoe in box.shoes:
+                print(shoe.name)
 
 
 
-def print_all_combinations(all_combinations):
-    for i, box in enumerate(all_combinations, 1):
-        print(f"Box {i}:")
-        for shoe in box.shoes:
-            print(f"  {shoe.name} - ${shoe.price}")
-        print(f"  Total Price: ${box.price}")
-        print()
 
 
 # Im not using this function rn the idea is to use it later on when i actually have the code working
