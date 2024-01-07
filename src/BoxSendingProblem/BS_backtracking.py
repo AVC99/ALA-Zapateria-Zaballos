@@ -15,23 +15,26 @@ def BS_start_backtracking(shoe_list):
     def backtrack(boxes, remaining_shoes, box_count):
         nonlocal best_solution, best_box_count
 
-        # Early pruning
+        # Early pruning: Stop if the current number of boxes is already not better than the best found
         if box_count >= best_box_count:
             return
 
+        # Check if all shoes have been placed. If yes, update the best solution if it's better than the current best
         if not remaining_shoes:
             if box_count < best_box_count:
                 best_box_count = box_count
-                best_solution = copy.deepcopy(boxes)
+                best_solution = copy.deepcopy(
+                    boxes
+                )  # Deep copy to avoid mutating the best solution
             return
 
         for i, shoe in enumerate(remaining_shoes):
             # Iterate over existing boxes
             for box in boxes:
-                if len(box.shoes) < 6:
+                if len(box.shoes) < 6:  # Check box capacity
                     box.add_shoe(shoe)
-                    box.calculate_price()
-                    if box.price < 1000:
+                    box.calculate_price()  # Recalculate price with the new shoe
+                    if box.price < 1000:  # Ensure the box price is within the limit
                         new_remaining = remaining_shoes[:i] + remaining_shoes[i + 1 :]
                         backtrack(boxes, new_remaining, box_count)
                     box.remove_shoe(shoe)
@@ -56,10 +59,12 @@ def print_best_solution(best_solution):
     if best_solution is None:
         print("No valid solution found")
         return
-
+    print("")
+    print("----------------------------------")
     print("Best solution using backtracking:")
     for i, box in enumerate(best_solution, 1):
-        print(f"Box {i} contains:")
+        print(f"📦  BOX {i} contains:")
         for shoe in box.shoes:
-            print(shoe.name)
-        print(f"Price: {box.price}")
+            print("   👟 ", shoe.name)
+        print(f"   💰  Price: {box.price}€")
+    print("")
