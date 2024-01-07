@@ -52,7 +52,7 @@ def BS_start_backtracking(shoe_list):
     print_best_solution(best_solution)
     time_end = time.time()
     print("Backtracking ended")
-    print("Time elapsed: " + str(time_end - time_start) + " seconds")
+    print("Time elapsed: {:.5f} seconds".format(time_end - time_start))
 
 
 def print_best_solution(best_solution):
