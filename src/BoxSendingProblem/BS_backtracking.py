@@ -12,43 +12,41 @@ def BS_start_backtracking(shoe_list):
     best_solution = None  # Stores the best combination of boxes found so far
     best_box_count = float("inf")  # Stores the count of boxes in the best solution
 
-    def backtrack(boxes, remaining_shoes):
+    def backtrack(boxes, remaining_shoes, box_count):
         nonlocal best_solution, best_box_count
 
-        # Check if the current solution is valid and update best_solution if it's better
+        # Early pruning
+        if box_count >= best_box_count:
+            return
+
         if not remaining_shoes:
-            current_box_count = len(boxes)
-            if current_box_count < best_box_count:
-                best_box_count = current_box_count
+            if box_count < best_box_count:
+                best_box_count = box_count
                 best_solution = copy.deepcopy(boxes)
             return
 
-        for shoe in remaining_shoes:
-            # Try to fit the shoe in existing boxes
+        for i, shoe in enumerate(remaining_shoes):
+            # Iterate over existing boxes
             for box in boxes:
                 if len(box.shoes) < 6:
                     box.add_shoe(shoe)
-                    box.calculate_price()  # Calculate price after adding the shoe
+                    box.calculate_price()
                     if box.price < 1000:
-                        backtrack(boxes, [s for s in remaining_shoes if s != shoe])
-                    box.remove_shoe(shoe)  # Remove the shoe and reset the price
-                    box.calculate_price()  # Recalculate price after removing the shoe
+                        new_remaining = remaining_shoes[:i] + remaining_shoes[i + 1 :]
+                        backtrack(boxes, new_remaining, box_count)
+                    box.remove_shoe(shoe)
+                    box.calculate_price()
 
-            # Try adding a new box if it doesn't exceed the current best solution
-            if len(boxes) < best_box_count:
+            # Add a new box if it doesn't exceed the current best solution
+            if box_count + 1 < best_box_count:
                 new_box = Box()
                 new_box.add_shoe(shoe)
-                if new_box.price < 1000:
-                    backtrack(
-                        boxes + [new_box], [s for s in remaining_shoes if s != shoe]
-                    )
+                new_remaining = remaining_shoes[:i] + remaining_shoes[i + 1 :]
+                backtrack(boxes + [new_box], new_remaining, box_count + 1)
 
-    # Start the backtracking process
-    backtrack([], shoe_list)
+    backtrack([], shoe_list, 0)
 
-    # Output the best solution
     print_best_solution(best_solution)
-
     time_end = time.time()
     print("Backtracking ended")
     print("Time elapsed: " + str(time_end - time_start) + " seconds")
