@@ -28,9 +28,11 @@ def BS_start_backtracking(shoe_list):
             for box in boxes:
                 if len(box.shoes) < 6:
                     box.add_shoe(shoe)
+                    box.calculate_price()  # Calculate price after adding the shoe
                     if box.price < 1000:
                         backtrack(boxes, [s for s in remaining_shoes if s != shoe])
-                    box.remove_shoe(shoe)
+                    box.remove_shoe(shoe)  # Remove the shoe and reset the price
+                    box.calculate_price()  # Recalculate price after removing the shoe
 
             # Try adding a new box if it doesn't exceed the current best solution
             if len(boxes) < best_box_count:
