@@ -59,12 +59,10 @@ def print_best_solution(best_solution):
     if best_solution is None:
         print("No valid solution found")
         return
-    print("")
-    print("----------------------------------")
+    print("\n----------------------------------")
     print("Best solution using backtracking:")
     for i, box in enumerate(best_solution, 1):
         print(f"📦  BOX {i} contains:")
         for shoe in box.shoes:
             print("   👟 ", shoe.name)
-        print(f"   💰  Price: {box.price}€")
-    print("")
+        print(f"   💰  Price: {box.price}€\n")
