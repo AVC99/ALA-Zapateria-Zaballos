@@ -1,6 +1,9 @@
 class Box:
-    def __init__(self):
-        self.shoes = set()
+    def __init__(self, shoes=None):
+        if shoes is None:
+            shoes = []
+        else: 
+            self.shoes = shoes
         self.price = 0
         self.kids_size_counter = 0
         self.brands = []
