@@ -27,7 +27,7 @@ sabateria pugui escollir quin d’ells li fa més el pes
   - [x] P2 B&B 
 
 ### Arnau 
-  - [] P1 Bruteforce
+  - [x] P1 Bruteforce
   - [] P1 B&B
   - [x] P2 Greedy
 
