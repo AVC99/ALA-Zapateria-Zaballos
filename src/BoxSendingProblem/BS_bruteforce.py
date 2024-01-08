@@ -11,7 +11,7 @@ def BS_start_bruteforce(shoe_list):
     all_combinations, box_counter = generate_shoe_combinations(shoe_list)
     # commented out because it takes too long to print
     # print_combinations(all_combinations)
-
+    # Recalculate the price of each box
     recalculate_price(all_combinations)
     print("Recalculated prices")
 
