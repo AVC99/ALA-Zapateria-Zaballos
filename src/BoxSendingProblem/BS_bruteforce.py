@@ -1,101 +1,116 @@
 from model.Shoe import *
 from model.Box import *
-from itertools import permutations
-from itertools import product
 import time
-import math
-
-# DUBTES:
-# Totes les sabates tenen que estar colocades? Entenc que si
-# Ha de estar les capeses plenes? Entenc que no
+import copy
 
 
 def BS_start_bruteforce(shoe_list):
     print("Bruteforce started")
     time_start = time.time()
+    # Generate all possible combinations of boxes for each shoe
+    all_combinations, box_counter = generate_shoe_combinations(shoe_list)
+    # commented out because it takes too long to print
+    # print_combinations(all_combinations)
 
-    # Create all the possible combinations of boxes
-    all_combinations = generate_all_combinations(shoe_list)
-    print_all_combinations(all_combinations)
+    recalculate_price(all_combinations)
+    print("Recalculated prices")
+
+    # commented out because it takes too long to print
+    # print_combinations(all_combinations)
+    # Find the best solution
+    best_price, best_combination = find_best_solution(all_combinations)
+
+    print_best_combination(best_combination, best_price)
 
     time_end = time.time()
     print("Bruteforce ended")
     print("Time elapsed: " + str(time_end - time_start) + " seconds")
+    print("Box counter: " + str(box_counter))
 
 
-def generate_all_combinations(shoe_dataset):
-    all_combinations = []
-
-    def generate_combinations_recursive(box, shoe_index):
-        if shoe_index == len(shoe_dataset):
-            # Reached the end of the shoe dataset, add the current box
-            all_combinations.append(Box(shoes=box.shoes[:], price=box.price))
-            return
-
-        # Skip the current shoe and move to the next one
-        generate_combinations_recursive(box, shoe_index + 1)
-
-        # Include the current shoe in the box and move to the next shoe
-        box.add_shoe(shoe_dataset[shoe_index])
-        generate_combinations_recursive(box, shoe_index + 1)
-        box.remove_shoe(shoe_dataset[shoe_index])
-
-    generate_combinations_recursive(Box(), 0)
-    return all_combinations
-
-
-
-
-def print_all_combinations(all_combinations):
-    for i, box in enumerate(all_combinations, 1):
-        print(f"Box {i}:")
+def print_best_combination(best_combination, best_price):
+    print("Best solution:")
+    print(f"Total Price: {best_price}")
+    for j, box in enumerate(best_combination, 1):
+        print(f"Box {j} contains:")
         for shoe in box.shoes:
-            print(f"  {shoe.name} - ${shoe.price}")
-        print(f"  Total Price: ${box.price}")
-        print()
+            print(shoe.name)
+        print(f"Price: {box.price}")
 
 
-# Im not using this function rn the idea is to use it later on when i actually have the code working
-def calculate_configuration_price(configuration, shoe_list):
-    for box in configuration:
-        newprice = 0
-        same_brand_counter = 0
-        kids_size_counter = 0
-        low_score_counter = 0
-        high_score_counter = 0
-        for i in range(len(box.shoes)):
-            for j in range(len(shoe_list)):
-                if box.shoes[i].name == shoe_list[j].name:
-                    same_brand_counter += 1
+def find_best_solution(all_combinations):
+    best_price = float("inf")
+    best_combination = []
 
-            if is_kids_size(box.shoes[i]):
-                kids_size_counter += 1
-            if is_low_score(box.shoes[i]):
-                low_score_counter += 1
-            if is_high_score(box.shoes[i]):
-                high_score_counter += 1
-            if same_brand_counter >= 2:
-                box.shoes[i].price *= 0.2
-            if kids_size_counter >= 2:
-                box.shoes[i].price *= 0.35
-            if low_score_counter >= 3:
-                box.shoes[i].price *= 0.4
-            if high_score_counter >= 3:
-                box.shoes[i].price *= 1.2
-            newprice += box.shoes[i].price
+    for i, combinations in enumerate(all_combinations, 1):
+        print(f"SOLUTION : {i}:")
+        combination_price = 0
+        for j, box in enumerate(combinations, 1):
+            print(f"Box {j} price: {box.price}")
+            if box.price >= 1000:
+                print("Box price is too high")
+                combination_price = float("inf")
+                break  # skip this box but continue with the next box
+            elif combination_price + box.price >= best_price:
+                print(
+                    "Combination price is too high I have found a better solution"
+                )  # skip this box and all the next boxes
+                combination_price = float("inf")
+                break
+            else:
+                combination_price += box.price
+                print(f"Combination price: {combination_price}")
 
-        box.price = newprice
+        # if the total price of this combination is higher than the best price found so far
+        if combination_price < best_price:
+            print(f"NEW BEST PRICEEEEE : {combination_price}")
+            best_price = copy.deepcopy(combination_price)
+            best_combination = copy.deepcopy(combinations)
 
-    return configuration
+    return best_price, best_combination
 
 
-def is_kids_size(shoe):
-    return shoe.max_size < 35
+def recalculate_price(all_combinations):
+    for i, combinations in enumerate(all_combinations, 1):
+        for j, box in enumerate(combinations, 1):
+            box.calculate_price()
+            print(f"Box {j} price: {box.price}")
 
 
-def is_low_score(shoe):
-    return shoe.score < 5
+def generate_shoe_combinations(shoe_list):
+    all_combinations = []
+    box_counter = 0
+    for partition in generate_partitions(shoe_list):
+        boxes = []
+        for subset in partition:
+            box = Box()  # create an empty box
+            box_counter += 1
+            for shoe in subset:
+                box.add_shoe(shoe)  # add each shoe to the box
+            boxes.append(box)
+        all_combinations.append(boxes)
+    return all_combinations, box_counter
 
 
-def is_high_score(shoe):
-    return shoe.score > 8
+def generate_partitions(lst):
+    if len(lst) == 0:
+        yield []
+        return
+    first = lst[0]
+    for smaller in generate_partitions(lst[1:]):
+        # insert `first` in each of the subpartition's subsets
+        for n, subset in enumerate(smaller):
+            yield smaller[:n] + [[first] + subset] + smaller[n + 1 :]
+        # put `first` in its own subset
+        yield [[first]] + smaller
+
+
+def print_combinations(all_combinations):
+    for i, combinations in enumerate(all_combinations, 1):
+        print(f"SOLUTION : {i}:")
+        for j, box in enumerate(combinations, 1):
+            print(f"Box {j} contains:")
+            print(f"Price: {box.price}")
+            for shoe in box.shoes:
+                print(shoe.name)
+    print("\n")
