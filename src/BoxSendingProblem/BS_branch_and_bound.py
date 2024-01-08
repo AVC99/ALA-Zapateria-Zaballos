@@ -10,6 +10,13 @@ def BS_start_branch_and_bound(shoe_list):
     # Start branch and bound 
     best_configuration = branch_and_bound(shoe_list)
 
+    print("Branch and bound ended")
+    print("Best configuration:")
+    # Print Best configuration
+    end_time = time.time()
+    print("Time elapsed: " + str(end_time - start_time) + " seconds")
+    
+
 
 
 
