@@ -1,35 +1,34 @@
 # ALA-Zapateria-Zaballos
-Optimization algorithms for a given problem resolved in Python
+Optimization algorithms for a given problem resolved in Python.
 
 ## Problem description
 
-El propietari de la mil·lenària i reconeguda “Zapatería Zaballos” va contractar als alumnes de PAED per a fer 
-una ordenació del seu inventari i poder créixer com a empresa. De fet ha anat tant bé que està pensant en 
-millores  i  ampliacions.  Com  que  aquestes  millores  passen  per  uns  estudis  previs  que  requereixen  de  la 
-implementació d’uns algorismes més complexos que els d’ordenació, ens ha demanat a nosaltres - alumnes 
-d’ALA - la tasca de pensar en les possibles solucions als seus nous problemes. 
-En primer lloc, se’ns ha demanat  ajuda per a decidir com enviar paquets de forma eficient segons  el preu 
-dels continguts que s’hi incloguin (evitant aranzels). 
-D’altra banda, se’ns ha encarregat un estudi de viabilitat sobre una hipotètica segona botiga física, volent 
-poder repartir els productes de forma que cap de les botigues eclipsi l’altra. 
-Veient la complexitat dels problemes, hem decidit que caldrà aplicar algorismes d’optimització combinatòria 
-per a solucionar-los. A continuació, els compararem en termes de rendiment per a que  el propietari de la 
-sabateria pugui escollir quin d’ells li fa més el pes
+The owner of the thousand-year-old and renowned "Zapatería Zaballos" hired PAED students to organize his inventory 
+and grow as a company. In fact, it has gone so well that he is thinking about improvements and expansions. Since these 
+improvements go through previous studies that require the implementation of more complex algorithms than the sorting 
+ones, he has asked us - ALA students - the task of thinking about possible solutions to his new problems.
+First of all, we have been asked for help in deciding how to send packages efficiently according to the price of the 
+contents included in them (avoiding tariffs).
+On the other hand, we have been commissioned with a feasibility study on a hypothetical second physical store, wanting 
+to be able to distribute the products in such a way that none of the stores overshadows the other.
+Seeing the complexity of the problems, we have decided that it will be necessary to apply combinatorial optimization 
+algorithms to solve them. Next, we will compare them in terms of performance so that the shoe store owner can choose 
+which one weighs the most
 
-## Reparto de problemas
+## Distribution of problems
 ### Alex 
-  - [x] P1 Backtracking
-  - [x] P1 Greedy
+  - [ ] P1 Backtracking (*IN REVIEW*)
+  - [ ] P1 Greedy
   
 ### Oscar
-  - [x] P2 Bruteforce
-  - [x] P2 Backtracking
-  - [x] P2 B&B 
+  - [ ] P2 Bruteforce
+  - [ ] P2 Backtracking
+  - [ ] P2 B&B 
 
 ### Arnau 
-  - [] P1 Bruteforce
-  - [] P1 B&B
-  - [x] P2 Greedy
+  - [X] P1 Bruteforce
+  - [X] P1 B&B
+  - [ ] P2 Greedy
 
 ## How to run 
 To run the entire project, you must have Python 3 installed on your computer.
