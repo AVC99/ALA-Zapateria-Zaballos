@@ -7,20 +7,20 @@ import copy
 def BS_start_bruteforce(shoe_list):
     print("Bruteforce started")
     time_start = time.time()
-    box_counter = 0
     # Generate all possible combinations of boxes for each shoe
-    all_combinations = generate_shoe_combinations(shoe_list)
-
-    #print_combinations(all_combinations)
+    all_combinations, box_counter = generate_shoe_combinations(shoe_list)
+    # commented out because it takes too long to print
+    # print_combinations(all_combinations)
 
     recalculate_price(all_combinations)
     print("Recalculated prices")
-    #print_combinations(all_combinations)
-    
+
+    # commented out because it takes too long to print
+    # print_combinations(all_combinations)
     # Find the best solution
     best_price, best_combination = find_best_solution(all_combinations)
 
-    print_best_combination(best_combination)
+    print_best_combination(best_combination, best_price)
 
     time_end = time.time()
     print("Bruteforce ended")
@@ -28,13 +28,15 @@ def BS_start_bruteforce(shoe_list):
     print("Box counter: " + str(box_counter))
 
 
-def print_best_combination(best_combination):
+def print_best_combination(best_combination, best_price):
     print("Best solution:")
+    print(f"Total Price: {best_price}")
     for j, box in enumerate(best_combination, 1):
         print(f"Box {j} contains:")
         for shoe in box.shoes:
             print(shoe.name)
         print(f"Price: {box.price}")
+
 
 def find_best_solution(all_combinations):
     best_price = float("inf")
@@ -50,7 +52,9 @@ def find_best_solution(all_combinations):
                 combination_price = float("inf")
                 break  # skip this box but continue with the next box
             elif combination_price + box.price >= best_price:
-                print("Combination price is too high")
+                print(
+                    "Combination price is too high I have found a better solution"
+                )  # skip this box and all the next boxes
                 combination_price = float("inf")
                 break
             else:
@@ -65,6 +69,7 @@ def find_best_solution(all_combinations):
 
     return best_price, best_combination
 
+
 def recalculate_price(all_combinations):
     for i, combinations in enumerate(all_combinations, 1):
         for j, box in enumerate(combinations, 1):
@@ -74,15 +79,17 @@ def recalculate_price(all_combinations):
 
 def generate_shoe_combinations(shoe_list):
     all_combinations = []
+    box_counter = 0
     for partition in generate_partitions(shoe_list):
         boxes = []
         for subset in partition:
             box = Box()  # create an empty box
+            box_counter += 1
             for shoe in subset:
                 box.add_shoe(shoe)  # add each shoe to the box
             boxes.append(box)
         all_combinations.append(boxes)
-    return all_combinations
+    return all_combinations, box_counter
 
 
 def generate_partitions(lst):
