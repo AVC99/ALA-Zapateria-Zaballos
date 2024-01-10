@@ -47,6 +47,9 @@ def BS_start_greedy(shoe_list):
 
 
 def print_greedy_solution(boxes):
+    box_count = len(boxes)
+    total_price = sum(box.price for box in boxes)
+
     print("\n----------------------------------")
     print("Greedy solution result:")
     for i, box in enumerate(boxes, 1):
@@ -54,3 +57,8 @@ def print_greedy_solution(boxes):
         for shoe in box.shoes:
             print("   👟 ", shoe.name)
         print(f"   💰  Price: {box.price}€\n")
+
+    print("----------------------------------")
+    print("Total number of boxes used:", box_count)
+    print("Total combined price of all boxes: {:.2f}€".format(total_price))
+    print("----------------------------------\n")
