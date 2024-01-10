@@ -78,7 +78,13 @@ def main():
         print("Exiting program.")
         return
 
-    shoe_list = getShoes(dataset_option)
+    try:
+        shoe_list = getShoes(dataset_option)
+    except FileNotFoundError:
+        print(
+            f"Error: Dataset file for the selected option ({dataset_option}) is not found."
+        )
+        return
 
     resolution_method = printResolutionMethodsMenu()
     if resolution_method == "0":
