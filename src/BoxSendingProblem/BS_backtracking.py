@@ -74,5 +74,5 @@ def print_best_solution(best_solution):
 
     print("----------------------------------")
     print(f"Total number of boxes used: {box_count}")
-    print(f"Total price of all boxes: {total_price}€")
+    print(f"Total combined price of all boxes: {total_price}€")
     print("----------------------------------\n")
