@@ -59,6 +59,10 @@ def print_best_solution(best_solution):
     if best_solution is None:
         print("No valid solution found")
         return
+
+    total_price = 0  # To accumulate the total price of all boxes
+    box_count = len(best_solution)  # Total number of boxes used
+
     print("\n----------------------------------")
     print("Best solution using backtracking:")
     for i, box in enumerate(best_solution, 1):
@@ -66,3 +70,9 @@ def print_best_solution(best_solution):
         for shoe in box.shoes:
             print("   👟 ", shoe.name)
         print(f"   💰  Price: {box.price}€\n")
+        total_price += box.price  # Add the price of this box to the total
+
+    print("----------------------------------")
+    print(f"Total number of boxes used: {box_count}")
+    print(f"Total price of all boxes: {total_price}€")
+    print("----------------------------------\n")
