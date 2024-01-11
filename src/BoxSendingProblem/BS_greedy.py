@@ -15,7 +15,9 @@ def BS_start_greedy(shoe_list):
     # Heuristic 2: Sorts shoes by brand, prioritizes children's shoes, and considers shoe scores.
     # Maximizes the utilization of discounts and minimize surcharges.
     # Lower efficiency than the first heuristic, but provides a lower amount of boxes.
-    # shoe_list.sort(key=lambda shoe: (shoe.name.split()[0], shoe.max_size < 35, -shoe.score))
+    # shoe_list.sort(
+    #     key=lambda shoe: (shoe.name.split()[0], shoe.max_size < 35, -shoe.score)
+    # )
 
     boxes = []
     current_box = Box()
