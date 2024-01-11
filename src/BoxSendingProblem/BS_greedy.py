@@ -7,14 +7,14 @@ def BS_start_greedy(shoe_list):
     print("Greedy approach started")
     time_start = time.time()
 
-    # Heuristic: Sort shoes by descending order of price.
-    # Placing more expensive shoes first, potentially maximizing
-    # the value utilization of each box's €1000 price limit.
+    # Heuristic 1: Sorts shoes by descending order of price.
+    # Fills each box with the most expensive shoes first, maximizing the box's value
+    # Higher efficiency
     shoe_list.sort(key=lambda shoe: shoe.price, reverse=True)
 
-    # NOTE: ---- MAYBE BETTER HEURISTIC ----
-    # Heuristic: Group shoes by brands, prioritize children's shoes, and balance shoe scores.
-    # Maximize the utilization of discounts and minimize surcharges.
+    # Heuristic 2: Sorts shoes by brand, prioritizes children's shoes, and considers shoe scores.
+    # Maximizes the utilization of discounts and minimize surcharges.
+    # Lower efficiency than the first heuristic, but provides a lower amount of boxes.
     # shoe_list.sort(key=lambda shoe: (shoe.name.split()[0], shoe.max_size < 35, -shoe.score))
 
     boxes = []
