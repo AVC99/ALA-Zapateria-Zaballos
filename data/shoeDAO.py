@@ -27,7 +27,7 @@ def getShoes(dataset_option):
             price = float(parts[1].replace(",", "."))
             min_size = int(parts[2])
             max_size = int(parts[3])
-            weight = parts[4]
+            weight = int(parts[4])
             score = float(parts[5].replace(",", "."))
 
             shoe = Shoe(name, price, min_size, max_size, weight, score)
