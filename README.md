@@ -17,18 +17,18 @@ which one weighs the most
 
 ## Distribution of problems
 ### Alex 
-  - [ ] P1 Backtracking (*IN REVIEW*)
-  - [ ] P1 Greedy
+  - [X] P1 Backtracking
+  - [X] P1 Greedy
   
 ### Oscar
-  - [ ] P2 Bruteforce
-  - [ ] P2 Backtracking
-  - [ ] P2 B&B 
+  - [X] P2 Bruteforce
+  - [X] P2 Backtracking
+  - [X] P2 B&B 
 
 ### Arnau 
   - [X] P1 Bruteforce
-  - [X] P1 B&B
-  - [ ] P2 Greedy
+  - [ ] P1 B&B
+  - [X] P2 Greedy
 
 ## How to run 
 To run the entire project, you must have Python 3 installed on your computer.
