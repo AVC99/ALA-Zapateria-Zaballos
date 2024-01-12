@@ -4,16 +4,39 @@ import time
 import copy
 
 
-def BS_start_backtracking(shoe_list):
+def BS_start_backtracking_marking(shoe_list):
     print("Backtracking started")
     time_start = time.time()
 
     # Initialize variables for tracking the best solution
     best_solution = None  # Stores the best combination of boxes found so far
     best_box_count = float("inf")  # Stores the count of boxes in the best solution
+    visited_states = set()  # For marking
+
+    def state_identifier(boxes):
+        # Generate a unique identifier for the current state
+        return tuple(
+            sorted(
+                (
+                    shoe.name,
+                    shoe.price,
+                    shoe.min_size,
+                    shoe.max_size,
+                    shoe.weight,
+                    shoe.score,
+                )
+                for box in boxes
+                for shoe in box.shoes
+            )
+        )
 
     def backtrack(boxes, remaining_shoes, box_count):
         nonlocal best_solution, best_box_count
+
+        state_id = state_identifier(boxes)
+        if state_id in visited_states:  # Skip already visited states
+            return
+        visited_states.add(state_id)
 
         # Early pruning: Stop if the current number of boxes is already not better than the best found
         if box_count >= best_box_count:

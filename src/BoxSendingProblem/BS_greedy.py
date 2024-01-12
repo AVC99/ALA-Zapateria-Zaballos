@@ -7,15 +7,17 @@ def BS_start_greedy(shoe_list):
     print("Greedy approach started")
     time_start = time.time()
 
-    # Heuristic: Sort shoes by descending order of price.
-    # Placing more expensive shoes first, potentially maximizing
-    # the value utilization of each box's €1000 price limit.
+    # Heuristic 1: Sorts shoes by descending order of price.
+    # Fills each box with the most expensive shoes first, maximizing the box's value
+    # Higher efficiency
     shoe_list.sort(key=lambda shoe: shoe.price, reverse=True)
 
-    # NOTE: ---- MAYBE BETTER HEURISTIC ----
-    # Heuristic: Group shoes by brands, prioritize children's shoes, and balance shoe scores.
-    # Maximize the utilization of discounts and minimize surcharges.
-    # shoe_list.sort(key=lambda shoe: (shoe.name.split()[0], shoe.max_size < 35, -shoe.score))
+    # Heuristic 2: Sorts shoes by brand, prioritizes children's shoes, and considers shoe scores.
+    # Maximizes the utilization of discounts and minimize surcharges.
+    # Lower efficiency than the first heuristic, but provides a lower amount of boxes.
+    # shoe_list.sort(
+    #     key=lambda shoe: (shoe.name.split()[0], shoe.max_size < 35, -shoe.score)
+    # )
 
     boxes = []
     current_box = Box()
@@ -47,6 +49,9 @@ def BS_start_greedy(shoe_list):
 
 
 def print_greedy_solution(boxes):
+    box_count = len(boxes)
+    total_price = sum(box.price for box in boxes)
+
     print("\n----------------------------------")
     print("Greedy solution result:")
     for i, box in enumerate(boxes, 1):
@@ -54,3 +59,8 @@ def print_greedy_solution(boxes):
         for shoe in box.shoes:
             print("   👟 ", shoe.name)
         print(f"   💰  Price: {box.price}€\n")
+
+    print("----------------------------------")
+    print("Total number of boxes used:", box_count)
+    print("Total combined price of all boxes: {:.2f}€".format(total_price))
+    print("----------------------------------\n")

@@ -8,6 +8,7 @@ from src.InventoryProblem.IP_greedy import IP_start_greedy
 
 from src.BoxSendingProblem.BS_bruteforce import BS_start_bruteforce
 from src.BoxSendingProblem.BS_backtracking import BS_start_backtracking
+from src.BoxSendingProblem.BS_backtracking_marking import BS_start_backtracking_marking
 from src.BoxSendingProblem.BS_branch_and_bound import BS_start_branch_and_bound
 from src.BoxSendingProblem.BS_greedy import BS_start_greedy
 
@@ -66,6 +67,20 @@ def printDatasetSelectionMenu():
             print("Invalid option. Please enter a valid option.")
 
 
+def printBacktrackingOptionsMenu():
+    while True:
+        print("\nSelect Backtracking Option:")
+        print("1. Backtracking")
+        print("2. Backtracking with Marking")
+        print("0. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice in ["0", "1", "2"]:
+            return choice
+        else:
+            print("Invalid option. Please enter a valid option.")
+
+
 def main():
     problem_option = printProblemsMenu()
 
@@ -78,7 +93,13 @@ def main():
         print("Exiting program.")
         return
 
-    shoe_list = getShoes(dataset_option)
+    try:
+        shoe_list = getShoes(dataset_option)
+    except FileNotFoundError:
+        print(
+            f"Error: Dataset file for the selected option ({dataset_option}) is not found."
+        )
+        return
 
     resolution_method = printResolutionMethodsMenu()
     if resolution_method == "0":
@@ -89,7 +110,11 @@ def main():
         if resolution_method == "1":
             BS_start_bruteforce(shoe_list)
         elif resolution_method == "2":
-            BS_start_backtracking(shoe_list)
+            backtracking_option = printBacktrackingOptionsMenu()
+            if backtracking_option == "1":
+                BS_start_backtracking(shoe_list)
+            elif backtracking_option == "2":
+                BS_start_backtracking_marking(shoe_list)
         elif resolution_method == "3":
             BS_start_branch_and_bound(shoe_list)
         elif resolution_method == "4":
