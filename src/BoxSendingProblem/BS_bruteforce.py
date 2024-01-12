@@ -9,15 +9,13 @@ def BS_start_bruteforce(shoe_list):
     time_start = time.time()
     # Generate all possible combinations of boxes for each shoe
     all_combinations, box_counter = generate_shoe_combinations(shoe_list)
+
     # commented out because it takes too long to print
     # print_combinations(all_combinations)
-
     recalculate_price(all_combinations)
     print("Recalculated prices")
-
     # commented out because it takes too long to print
     # print_combinations(all_combinations)
-    # Find the best solution
     best_price, best_combination = find_best_solution(all_combinations)
 
     print_best_combination(best_combination, best_price)
@@ -29,13 +27,16 @@ def BS_start_bruteforce(shoe_list):
 
 
 def print_best_combination(best_combination, best_price):
+    print("\n------------------")
     print("Best solution:")
-    print(f"Total Price: {best_price}")
     for j, box in enumerate(best_combination, 1):
-        print(f"Box {j} contains:")
+        print(f"📦 Box {j} contains:")
         for shoe in box.shoes:
-            print(shoe.name)
-        print(f"Price: {box.price}")
+            print("   👟 ", shoe.name," price: ", shoe.price)
+        print(f"Box price: {box.price}")
+    print(f"Total Price: {best_price}")
+    print(f"Total Boxes: {len(best_combination)}")
+    print("------------------\n")
 
 
 def find_best_solution(all_combinations):
@@ -86,7 +87,9 @@ def generate_shoe_combinations(shoe_list):
             box = Box()  # create an empty box
             box_counter += 1
             for shoe in subset:
-                box.add_shoe(shoe)  # add each shoe to the box
+                # if the box has less than 6 shoes
+                if len(box.shoes) < 6 :
+                    box.add_shoe(shoe)  # add each shoe to the box
             boxes.append(box)
         all_combinations.append(boxes)
     return all_combinations, box_counter
