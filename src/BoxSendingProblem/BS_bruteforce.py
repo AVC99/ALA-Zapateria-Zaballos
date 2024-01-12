@@ -1,181 +1,116 @@
 from model.Shoe import *
 from model.Box import *
-from itertools import permutations
 import time
-import math
-
-# DUBTES:
-# Totes les sabates tenen que estar colocades? Entenc que si
-# Ha de estar les capeses plenes? Entenc que no
+import copy
 
 
 def BS_start_bruteforce(shoe_list):
     print("Bruteforce started")
     time_start = time.time()
+    # Generate all possible combinations of boxes for each shoe
+    all_combinations, box_counter = generate_shoe_combinations(shoe_list)
+    # commented out because it takes too long to print
+    # print_combinations(all_combinations)
+    # Recalculate the price of each box
+    recalculate_price(all_combinations)
+    print("Recalculated prices")
 
-    configuration = create_initial_configuration(shoe_list)
-    best_configuration = configuration
+    # commented out because it takes too long to print
+    # print_combinations(all_combinations)
+    # Find the best solution
+    best_price, best_combination = find_best_solution(all_combinations)
 
-    best_configuration = bruteforce(configuration, best_configuration, shoe_list)
-
-    #THIS IS NOT WORKING FOR NOW
-    # print best configuration
-    print("Best configuration:")
-    for box in best_configuration:
-        print("  Box:")
-        for shoe in box.shoes:
-            print("    " + shoe.name + " - $" + str(shoe.price))
-        print("    Total Price: $" + str(box.price))
+    print_best_combination(best_combination, best_price)
 
     time_end = time.time()
     print("Bruteforce ended")
     print("Time elapsed: " + str(time_end - time_start) + " seconds")
+    print("Box counter: " + str(box_counter))
 
 
-# WHEN WE CREATE ALL THE COMBINATIONS I DONT THINK WE NEED THIS ANYMORE
-def create_initial_configuration(shoe_list):
-    # configuration is a list of boxes
-    # each box is a list of shoes
-    # each shoe is a Shoe object
-    configuration = [Box() for _ in range(math.ceil(len(shoe_list) / 6))]
-
-    shoe_counter = 0
-    box_counter = 0
-    for shoe in shoe_list:
-        configuration[box_counter].add_shoe(shoe)
-        shoe_counter += 1
-        if shoe_counter == 6:
-            shoe_counter = 0
-            box_counter += 1
-
-    return configuration
+def print_best_combination(best_combination, best_price):
+    print("Best solution:")
+    print(f"Total Price: {best_price}")
+    for j, box in enumerate(best_combination, 1):
+        print(f"Box {j} contains:")
+        for shoe in box.shoes:
+            print(shoe.name)
+        print(f"Price: {box.price}")
 
 
-def bruteforce(configuration, best_configuration, shoe_list):
-    best_configuration_total_price = 0
+def find_best_solution(all_combinations):
+    best_price = float("inf")
+    best_combination = []
 
-    all_box_combinations = set()
-
-    for perm in permutations(shoe_list):
-        boxes = []
-        remaining_price = 1000
-       #Could bake into this the discount calculations I should indeed do that
-       #TODO: Calculate the discounts
-        for shoe in perm:
-            if remaining_price - shoe.price >= 0:
-                remaining_price -= shoe.price
-                if len(boxes) == 0:
-                    boxes.append(Box())
-                boxes[-1].add_shoe(shoe)
+    for i, combinations in enumerate(all_combinations, 1):
+        print(f"SOLUTION : {i}:")
+        combination_price = 0
+        for j, box in enumerate(combinations, 1):
+            print(f"Box {j} price: {box.price}")
+            if box.price >= 1000:
+                print("Box price is too high")
+                combination_price = float("inf")
+                break  # skip this box but continue with the next box
+            elif combination_price + box.price >= best_price:
+                print(
+                    "Combination price is too high I have found a better solution"
+                )  # skip this box and all the next boxes
+                combination_price = float("inf")
+                break
             else:
-                boxes.append(Box())
-                boxes[-1].add_shoe(shoe)
-                remaining_price = 1000 - shoe.price
-        all_box_combinations.add(tuple(boxes))
+                combination_price += box.price
+                print(f"Combination price: {combination_price}")
 
-    # Print all_box_combinations before recalculating prices
-    for config_num, config in enumerate(all_box_combinations, 1 ):
-        print(f"Configuration {config_num}:")
-        for box_num, box in enumerate(config, 1):
-            print(f"  Box {box_num}:")
+        # if the total price of this combination is higher than the best price found so far
+        if combination_price < best_price:
+            print(f"NEW BEST PRICEEEEE : {combination_price}")
+            best_price = copy.deepcopy(combination_price)
+            best_combination = copy.deepcopy(combinations)
+
+    return best_price, best_combination
+
+
+def recalculate_price(all_combinations):
+    for i, combinations in enumerate(all_combinations, 1):
+        for j, box in enumerate(combinations, 1):
+            box.calculate_price()
+            print(f"Box {j} price: {box.price}")
+
+
+def generate_shoe_combinations(shoe_list):
+    all_combinations = []
+    box_counter = 0
+    for partition in generate_partitions(shoe_list):
+        boxes = []
+        for subset in partition:
+            box = Box()  # create an empty box
+            box_counter += 1
+            for shoe in subset:
+                box.add_shoe(shoe)  # add each shoe to the box
+            boxes.append(box)
+        all_combinations.append(boxes)
+    return all_combinations, box_counter
+
+
+def generate_partitions(lst):
+    if len(lst) == 0:
+        yield []
+        return
+    first = lst[0]
+    for smaller in generate_partitions(lst[1:]):
+        # insert `first` in each of the subpartition's subsets
+        for n, subset in enumerate(smaller):
+            yield smaller[:n] + [[first] + subset] + smaller[n + 1 :]
+        # put `first` in its own subset
+        yield [[first]] + smaller
+
+
+def print_combinations(all_combinations):
+    for i, combinations in enumerate(all_combinations, 1):
+        print(f"SOLUTION : {i}:")
+        for j, box in enumerate(combinations, 1):
+            print(f"Box {j} contains:")
+            print(f"Price: {box.price}")
             for shoe in box.shoes:
-                print(f"    {shoe.name} - ${shoe.price}")
-            print(f"    Total Price: ${box.price}")
-        print()
-
-
-    """
-    #FROM HERE ON IS WRONG ------------------------------------
-    # Recalculate configuration prices with the discounts
-    for config_num, config in enumerate(all_box_combinations, 1 ):
-        print(f"Configuration {config_num}:")
-        for box_num, box in enumerate(config, 1):
-            newprice = 0
-            same_brand_counter = 0
-            kids_size_counter = 0
-            low_score_counter = 0
-            high_score_counter = 0
-
-            for i in range(len(box.shoes)):
-                for j in range(len(box.shoes)):
-                    if box.shoes[i].name == box.shoes[j].name:
-                        same_brand_counter += 1
-                    
-                if is_kids_size(box.shoes[i]):
-                    kids_size_counter += 1
-                if is_low_score(box.shoes[i]):
-                    low_score_counter += 1
-                if is_high_score(box.shoes[i]):
-                    high_score_counter += 1
-                if same_brand_counter >= 2:
-                    box.shoes[i].price *= 0.2
-                if kids_size_counter >= 2:
-                    box.shoes[i].price *= 0.35
-                if low_score_counter >= 3:
-                    box.shoes[i].price *= 0.4
-                if high_score_counter >= 3:
-                    box.shoes[i].price *= 1.2
-                newprice += box.shoes[i].price
-
-            box.price = newprice
-            print(f"  Box {box_num}:")
-            for shoe in box.shoes:
-                print(f"    {shoe.name} - ${shoe.price}")
-            print(f"    Total Price: ${box.price}")
-        print()
-
-    # Calculate total price for the configuration
-    for config in all_box_combinations:
-        total_price = 0
-        for box in config:
-            total_price += box.price
-        print(f"Total Price for all boxes: ${total_price}")
-        print()
-
-    """
-    return best_configuration
-
-# Im not using this function rn the idea is to use it later on when i actually have the code working
-def calculate_configuration_price(configuration, shoe_list):
-    for box in configuration:
-        newprice = 0
-        same_brand_counter = 0
-        kids_size_counter = 0
-        low_score_counter = 0
-        high_score_counter = 0
-        for i in range(len(box.shoes)):
-            for j in range(len(shoe_list)):
-                if box.shoes[i].name == shoe_list[j].name:
-                    same_brand_counter += 1
-
-            if is_kids_size(box.shoes[i]):
-                kids_size_counter += 1
-            if is_low_score(box.shoes[i]):
-                low_score_counter += 1
-            if is_high_score(box.shoes[i]):
-                high_score_counter += 1
-            if same_brand_counter >= 2:
-                box.shoes[i].price *= 0.2
-            if kids_size_counter >= 2:
-                box.shoes[i].price *= 0.35
-            if low_score_counter >= 3:
-                box.shoes[i].price *= 0.4
-            if high_score_counter >= 3:
-                box.shoes[i].price *= 1.2
-            newprice += box.shoes[i].price
-
-        box.price = newprice
-
-    return configuration
-
-
-def is_kids_size(shoe):
-    return shoe.max_size < 35
-
-
-def is_low_score(shoe):
-    return shoe.score < 5
-
-
-def is_high_score(shoe):
-    return shoe.score > 8
+                print(shoe.name)
+    print("\n")
