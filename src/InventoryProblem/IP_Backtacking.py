@@ -1,49 +1,58 @@
 from model.Shoe import *
 import time
-#OSCAR
+
 
 def IP_start_backtracking(shoe_list):
     def backtrack(index, part1, part2):
-        nonlocal millor_diferencia, millor_part1, millor_part2
+        nonlocal best_difference, best_part1, best_part2
 
         if index == len(shoe_list):
-            # Calcular la diferencia de precios y actualizar la mejor solución
-            diferencia = abs(sum(s.price for s in part1) - sum(s.price for s in part2))
-            if diferencia < millor_diferencia:
-                millor_diferencia = diferencia
-                millor_part1 = part1.copy()
-                millor_part2 = part2.copy()
+            # Calculate the price difference and update the best solution
+            difference = abs(sum(s.price for s in part1) - sum(s.price for s in part2))
+            if difference < best_difference:
+                best_difference = difference
+                best_part1 = part1.copy()
+                best_part2 = part2.copy()
 
         else:
-            # Incluir el zapato en la primera parte y explorar
+            # Include the shoe in the first part and explore
             part1.append(shoe_list[index])
             backtrack(index + 1, part1, part2)
-            part1.pop()  # Retroceder
+            part1.pop()  # Go back
 
-            # Incluir el zapato en la segunda parte y explorar
+            # Include the shoe in the second part and explore
             part2.append(shoe_list[index])
             backtrack(index + 1, part1, part2)
-            part2.pop()  # Retroceder
+            part2.pop()  # Go back
 
     print("Backtracking started")
     time_start = time.time()
-    
-    millor_diferencia = float('inf')
-    millor_part1 = []
-    millor_part2 = []
 
-    # Iniciar la recursión desde el índice 0
+    best_difference = float("inf")
+    best_part1 = []
+    best_part2 = []
+
+    # Start the recursion from index 0
     backtrack(0, [], [])
 
     time_end = time.time()
-    print(time_end - time_start)
+    print("\n-------------------------------")
+    print("Inventory division using brute force")
+    print("-------------------------------")
+    print(f"💰  Best price difference: €{best_difference:.2f}")
 
-    print("Millor diferencia: ", millor_diferencia)
-    print("La mejor parte 1: ")
-    for s in millor_part1:
-        print(s.name, s.price)
-    print("La mejor parte 2: ")
-    for s in millor_part2:
-        print(s.name, s.price)
+    total_price_part1 = sum(s.price for s in best_part1)
+    print("\n🏪  Store 1 Inventory (💵 Total price: {:.2f}€):".format(total_price_part1))
+    for s in best_part1:
+        print(f"   👟  {s.name} - €{s.price}")
 
-    return millor_part1, millor_part2
+    total_price_part2 = sum(s.price for s in best_part2)
+    print("\n🏪  Store 2 Inventory (💵 Total price: {:.2f}€):".format(total_price_part2))
+    for s in best_part2:
+        print(f"   👟  {s.name} - €{s.price}")
+
+    print("\n-------------------------------")
+    print("Backtracking ended")
+    print(f"Execution Time: {time_end - time_start} seconds")
+
+    return best_part1, best_part2
