@@ -1,6 +1,7 @@
 from model.Shoe import *
 from model.Node import Node
 import time
+from collections import deque
 
 
 def IP_start_branch_and_bound(shoe_list):
@@ -13,10 +14,10 @@ def IP_start_branch_and_bound(shoe_list):
     best_part2 = []
 
     # Initialize the node queue
-    queue = [Node(0, [], [], 0, 0, 0)]
+    queue = deque([Node(0, [], [], 0, 0, 0)])
 
     while queue:
-        node = queue.pop(0)
+        node = queue.popleft()
 
         if node.index == n:
             # Check and update the best solution found

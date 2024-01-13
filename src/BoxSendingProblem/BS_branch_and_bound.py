@@ -2,7 +2,7 @@ from model.Shoe import *
 from model.Box import *
 import time
 import copy
-
+from collections import deque
 
 
 def BS_start_branch_and_bound(shoe_list):
@@ -17,27 +17,35 @@ def BS_start_branch_and_bound(shoe_list):
 
 def branch_and_bound(shoe_list):
     valid_solutions_counter = 0
-    configs = []
+    configs = deque()  # Use deque instead of list
     configs.append(([Box()], shoe_list))  # 0,1 -> boxes, remaining_shoes, price
     best_solution = None
     min_boxes = float("inf")
 
     while configs:
-        configs.sort(key=lambda x: len(x[0]), reverse=True)
-        current_config = configs.pop()
+        current_config = configs.popleft()  # Pop from the front of the deque
         sons = expand(current_config)
 
         for son in sons:
             if len(son[0]) < min_boxes:
-                configs.append(son)
+                # Insert in a way that keeps the deque ordered based on your chosen heuristic
+                insert_in_order(configs, son)
                 total_shoes_in_boxes = sum([len(box.shoes) for box in son[0]])
-                if total_shoes_in_boxes == len(shoe_list):  # If all shoes are in boxes => valid solution
-                    min_boxes = copy.deepcopy(len(son[0]))
+                if total_shoes_in_boxes == len(shoe_list):  # Valid solution
+                    min_boxes = len(son[0])
                     best_solution = copy.deepcopy(son[0])
-
                     valid_solutions_counter += 1
 
     return best_solution
+
+
+def insert_in_order(configs, new_config):
+    # This function will insert the new_config into configs in a sorted order
+    # based on the length of the boxes list (or another heuristic you choose)
+    index = 0
+    while index < len(configs) and len(configs[index][0]) < len(new_config[0]):
+        index += 1
+    configs.insert(index, new_config)
 
 
 def expand(current_config):

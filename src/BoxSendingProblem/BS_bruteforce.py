@@ -9,12 +9,9 @@ def BS_start_bruteforce(shoe_list):
     time_start = time.time()
     # Generate all possible combinations of boxes for each shoe
     all_combinations, box_counter = generate_shoe_combinations(shoe_list)
-    # commented out because it takes too long to print
-    # print_combinations(all_combinations)
+
     recalculate_price(all_combinations)
     print("Recalculated prices")
-    # commented out because it takes too long to print
-    # print_combinations(all_combinations)
 
     best_price, best_combination = find_best_solution(all_combinations)
 
@@ -32,7 +29,7 @@ def print_best_combination(best_combination, best_price):
     for j, box in enumerate(best_combination, 1):
         print(f"📦 Box {j} contains:")
         for shoe in box.shoes:
-            print("   👟 ", shoe.name ," price: ", shoe.price)
+            print("   👟 ", shoe.nam  ," price: ", shoe.price)
         print(f"Box price: {box.price}")
     print(f"Total Price: {best_price}")
     print(f"Total Boxes: {len(best_combination)}")
@@ -45,11 +42,9 @@ def find_best_solution(all_combinations):
     best_combination = []
 
     for i, combinations in enumerate(all_combinations, 1):
-        #print(f"SOLUTION : {i}:")
         combination_price = 0
         comb_boxes = 0
         for j, box in enumerate(combinations, 1):
-            #print(f"Box {j} price: {box.price}")
             if box.price >= 1000:
                 print("Box price is too high")
                 combination_price = float("inf")
@@ -65,7 +60,6 @@ def find_best_solution(all_combinations):
             else:
                 combination_price += box.price
                 comb_boxes += 1
-                #print(f"Combination price: {combination_price}")
 
         # if the total price of this combination is higher than the best price found so far
         if comb_boxes < best_boxes:
@@ -79,7 +73,6 @@ def recalculate_price(all_combinations):
     for i, combinations in enumerate(all_combinations, 1):
         for j, box in enumerate(combinations, 1):
             box.calculate_price()
-            #print(f"Box {j} price: {box.price}")
 
 
 def generate_shoe_combinations(shoe_list):
