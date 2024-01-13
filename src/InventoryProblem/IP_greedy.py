@@ -5,15 +5,17 @@ import time
 def IP_start_greedy(shoe_list):
     print("Greedy started")
     time_start = time.time()
-    shop1, shop2, difference = solve_greedy(shoe_list)
+    shop1, shop2, difference, sum_shop1, sum_shop2 = solve_greedy(shoe_list)
     time_end = time.time()
-    print("Shop 1:")
+    print(f"\n🏪  Store 1 Inventory (💵 Total price: {sum_shop1}€):")
     for shoe in shop1:
         print(f" 👟",shoe.name)
-    print("Shop 2:")
+    print(f"\n🏪  Store 2 Inventory (💵 Total price: {sum_shop2}€):")
     for shoe in shop2:
         print(f" 👟",shoe.name)
-    print("Difference: ", difference)
+    print(f"\n🏪  Store 1 💵 Total price: {sum_shop1}€:")
+    print(f"\n🏪  Store 2 💵 Total price: {sum_shop2}€:")
+    print(f"\n💰  Best price difference: €{difference}\n")
     print("Greedy ended")
     print("Time elapsed: " + str(time_end - time_start) + " seconds")
 
@@ -38,4 +40,4 @@ def solve_greedy(shoe_list):
             sum_shop2 += shoe.price
 
     difference = abs(sum_shop1 - sum_shop2)
-    return shop1, shop2, difference
+    return shop1, shop2, difference, sum_shop1, sum_shop2
