@@ -39,6 +39,7 @@ class Box:
         self.price -= shoe.price
 
     def calculate_price(self):
+
         #print("CALCULATING PRICE")
         #print("INITIAL PRICE " + str(self.price))
         #print(
@@ -54,6 +55,7 @@ class Box:
             discount = 1
             #print(shoe.name)
             #print(shoe.price)
+
             if self.brands.count(shoe.name) >= 2:
                 discount -= 0.2
             if self.kids_size_counter >= 2:
