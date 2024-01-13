@@ -92,37 +92,6 @@ def expand(current_config):
     return sons
 
 
-
-#def expand(current_config):
-#    sons = []
-#    boxes, remaining_shoes = current_config
-#    for i, shoe_to_add in enumerate(remaining_shoes):
-#        new_remaining_shoes = remaining_shoes[:i] + remaining_shoes[i + 1 :]
-#        for j, box in enumerate(boxes):
-#            if len(box.shoes) < 6:
-#                new_box = copy.deepcopy(box)
-#                new_box.add_shoe(shoe_to_add)
-#                new_box.calculate_price()
-#                print(f"NEW BOX PRICE: {new_box.price}")
-#                if new_box.price <= 1000:
-#                    new_boxes = copy.deepcopy(boxes[:j] + [new_box] + boxes[j + 1 :])
-#                    new_config = (new_boxes, new_remaining_shoes)
-#                    sons.append(new_config)
-#                    print("SON ADDED")
-#                    for box in new_boxes:
-#                        for shoe in box.shoes:
-#                            print(f" 👟",shoe.name)
-#                        print(f"📦 Box price: {box.price}")
-#        new_box = Box()
-#        new_box.add_shoe(shoe_to_add)
-#        new_box.calculate_price()
-#        if new_box.price <= 1000:
-#            new_config = (boxes + [new_box], new_remaining_shoes)
-#            sons.append(new_config)
-#    print("SONS EXPANDED")
-#    return sons
-
-
 def print_best_solution(best_combination):
     price = 0
     print("\n------------------")
