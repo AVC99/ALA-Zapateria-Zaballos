@@ -39,21 +39,23 @@ class Box:
         self.price -= shoe.price
 
     def calculate_price(self):
-        print("CALCULATING PRICE")
-        print("INITIAL PRICE " + str(self.price))
-        print(
-            "ALL COUNTERS "
-            + str(self.kids_size_counter)
-            + " "
-            + str(self.low_score_counter)
-            + " "
-            + str(self.high_score_counter)
-        )
+
+        #print("CALCULATING PRICE")
+        #print("INITIAL PRICE " + str(self.price))
+        #print(
+        #    "ALL COUNTERS "
+        #    + str(self.kids_size_counter)
+        #    + " "
+        #    + str(self.low_score_counter)
+        #    + " "
+        #    + str(self.high_score_counter)
+        #)
         self.price = 0
         for shoe in self.shoes:
             discount = 1
-            print(shoe.name)
-            print(shoe.price)
+            #print(shoe.name)
+            #print(shoe.price)
+
             if self.brands.count(shoe.name) >= 2:
                 discount -= 0.2
             if self.kids_size_counter >= 2:
@@ -64,8 +66,8 @@ class Box:
                 discount += 0.2
 
             final_price = shoe.price * discount
-            print("DISCOUNT " + str(discount))
-            print("FINAL PRICE " + str(final_price))
+            #print("DISCOUNT " + str(discount))
+            #print("FINAL PRICE " + str(final_price))
             self.price += final_price
 
-        print("BOX FINAL PRICE: " + str(self.price))
+        #print("BOX FINAL PRICE: "+ str(self.price))

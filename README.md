@@ -26,9 +26,10 @@ which one weighs the most
   - [X] P2 B&B 
 
 ### Arnau 
-  - [X] P1 Bruteforce
-  - [ ] P1 B&B
-  - [X] P2 Greedy
+  - [x] P1 Bruteforce
+  - [] P1 B&B
+  - [x] P2 Greedy
+
 
 ## How to run 
 To run the entire project, you must have Python 3 installed on your computer.
