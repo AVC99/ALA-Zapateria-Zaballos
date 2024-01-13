@@ -1,68 +1,85 @@
 from model.Shoe import *
+from model.Node import Node
 import time
-#OSCAR
 
-
-
-#Porque tarda mas que el de fuerza bruta?
-
-
-
-class Node:
-    def __init__(self, index, part1, part2, preu_part1, preu_part2, diferencia):
-        self.index = index
-        self.part1 = part1
-        self.part2 = part2
-        self.preu_part1 = preu_part1
-        self.preu_part2 = preu_part2
-        self.diferencia = diferencia
 
 def IP_start_branch_and_bound(shoe_list):
     print("Branch and Bound started")
     time_start = time.time()
 
     n = len(shoe_list)
-    millor_diferencia = float('inf')
-    millor_part1 = []
-    millor_part2 = []
+    best_difference = float("inf")
+    best_part1 = []
+    best_part2 = []
 
-    # Inicializar la cola de nodos
+    # Initialize the node queue
     queue = [Node(0, [], [], 0, 0, 0)]
 
     while queue:
         node = queue.pop(0)
 
         if node.index == n:
-            # Verificar y actualizar la mejor solución encontrada
-            if node.diferencia < millor_diferencia:
-                millor_diferencia = node.diferencia
-                millor_part1 = node.part1.copy()
-                millor_part2 = node.part2.copy()
-
+            # Check and update the best solution found
+            if node.difference < best_difference:
+                best_difference = node.difference
+                best_part1 = node.part1.copy()
+                best_part2 = node.part2.copy()
         else:
-            # Generar nodos hijos
+            # Generate child nodes
             for i in range(2):
-                new_part1 = node.part1 + [shoe_list[node.index]] if i == 0 else node.part1
-                new_part2 = node.part2 + [shoe_list[node.index]] if i == 1 else node.part2
+                new_part1 = (
+                    node.part1 + [shoe_list[node.index]] if i == 0 else node.part1
+                )
+                new_part2 = (
+                    node.part2 + [shoe_list[node.index]] if i == 1 else node.part2
+                )
 
-                new_preu_part1 = node.preu_part1 + shoe_list[node.index].price if i == 0 else node.preu_part1
-                new_preu_part2 = node.preu_part2 + shoe_list[node.index].price if i == 1 else node.preu_part2
+                new_price_part1 = (
+                    node.price_part1 + shoe_list[node.index].price
+                    if i == 0
+                    else node.price_part1
+                )
+                new_price_part2 = (
+                    node.price_part2 + shoe_list[node.index].price
+                    if i == 1
+                    else node.price_part2
+                )
 
-                new_diferencia = abs(new_preu_part1 - new_preu_part2)
+                new_difference = abs(new_price_part1 - new_price_part2)
 
-                # Agregar nodos hijos a la cola si cumplen con la condición
-                if new_diferencia < millor_diferencia:
-                    queue.append(Node(node.index + 1, new_part1, new_part2, new_preu_part1, new_preu_part2, new_diferencia))
+                # Add child nodes to the queue if they meet the condition
+                if new_difference < best_difference:
+                    queue.append(
+                        Node(
+                            node.index + 1,
+                            new_part1,
+                            new_part2,
+                            new_price_part1,
+                            new_price_part2,
+                            new_difference,
+                        )
+                    )
 
     time_end = time.time()
-    print(time_end - time_start)
+    print("Branch and Bound ended")
+    print(f"Execution Time: {time_end - time_start} seconds")
 
-    print("Millor diferencia: ", millor_diferencia)
-    print("La mejor parte 1: ")
-    for s in millor_part1:
-        print(s.name, s.price)
-    print("La mejor parte 2: ")
-    for s in millor_part2:
-        print(s.name, s.price)
+    # Display the results
+    print("\n--------------------------------")
+    print("Inventory division using Branch and Bound")
+    print("--------------------------------")
+    print(f"💰  Best price difference: €{best_difference:.2f}")
 
-    return millor_part1, millor_part2
+    total_price_part1 = sum(s.price for s in best_part1)
+    print("\n🏪  Store 1 Inventory (Total Price: €{:.2f}):".format(total_price_part1))
+    for s in best_part1:
+        print(f"   👟  {s.name} - €{s.price}")
+
+    total_price_part2 = sum(s.price for s in best_part2)
+    print("\n🏪  Store 2 Inventory (Total Price: €{:.2f}):".format(total_price_part2))
+    for s in best_part2:
+        print(f"   👟  {s.name} - €{s.price}")
+
+    print("--------------------------------\n")
+
+    return best_part1, best_part2
