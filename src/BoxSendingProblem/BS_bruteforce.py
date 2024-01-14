@@ -29,7 +29,7 @@ def print_best_combination(best_combination, best_price):
     for j, box in enumerate(best_combination, 1):
         print(f"📦 Box {j} contains:")
         for shoe in box.shoes:
-            print("   👟 ", shoe.nam  ," price: ", shoe.price)
+            print("   👟 ", shoe.name  ," price: ", shoe.price)
         print(f"Box price: {box.price}")
     print(f"Total Price: {best_price}")
     print(f"Total Boxes: {len(best_combination)}")
